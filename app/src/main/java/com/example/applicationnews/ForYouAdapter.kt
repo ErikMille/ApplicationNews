@@ -4,15 +4,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import androidx.core.content.ContextCompat.startActivity
+
 
 import android.content.Intent
-import androidx.core.content.ContextCompat
+
 
 
 class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : RecyclerView.Adapter<ForYouAdapter.ViewHolder>() {

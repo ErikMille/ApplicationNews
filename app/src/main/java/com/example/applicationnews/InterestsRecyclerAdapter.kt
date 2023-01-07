@@ -4,17 +4,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import androidx.core.content.ContextCompat.startActivity
-
 import android.content.Intent
-import androidx.core.content.ContextCompat
 
-class InterestsRecyclerAdapter (private val imageModelArrayList: MutableList<CardModel>) : RecyclerView.Adapter<InterestsRecyclerAdapter.ViewHolder>() {
+class InterestsRecyclerAdapter (private val imageModelArrayList: MutableList<InterestModel>) : RecyclerView.Adapter<InterestsRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InterestsRecyclerAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
