@@ -19,6 +19,8 @@
     <string name="some_interest">Interest</string>
     <string name="search">Search</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="lorem_ipsum_popular">Popular lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="lorem_ipsum_search">Search lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
     <string name="lorem_ipsum_header">Lorem Ipsum.</string>
     <string name="add_interest">Add Interest</string>
     <string name="source_link"><a href="https://www.source.co.uk/">https://www.source.co.uk/</a></string>

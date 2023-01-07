@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +37,35 @@ class SearchFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val imageModelArrayList = populateList()
+//
+        val recyclerView = view.findViewById(R.id.my_recycler_view_search) as RecyclerView// Bind to the recyclerview in the layout
+
+        val layoutManager = LinearLayoutManager(activity) // Get the layout manager
+        recyclerView.layoutManager = layoutManager
+        val mAdapter = ForYouAdapter(imageModelArrayList)
+        recyclerView.adapter = mAdapter
+    }
+
+    private fun populateList(): ArrayList<CardModel> {
+        val list = ArrayList<CardModel>()
+        val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
+        val myImageNameList = arrayOf(R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header)
+        val myImageTextList = arrayOf(R.string.lorem_ipsum_search,R.string.lorem_ipsum_search,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum)
+
+        for (i in 0..9) {
+            val imageModel = CardModel()
+            imageModel.setNames(getString(myImageNameList[i]))
+            imageModel.setTexts(getString(myImageTextList[i]))
+            imageModel.setImages(myImageList[i])
+            list.add(imageModel)
+        }
+        return list
     }
 
     companion object {

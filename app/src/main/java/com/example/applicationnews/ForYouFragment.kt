@@ -54,6 +54,22 @@ class ForYouFragment : Fragment() {
         recyclerView.adapter = mAdapter
     }
 
+    private fun populateList(): ArrayList<CardModel> {
+        val list = ArrayList<CardModel>()
+        val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
+        val myImageNameList = arrayOf(R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header)
+        val myImageTextList = arrayOf(R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum)
+
+        for (i in 0..9) {
+            val imageModel = CardModel()
+            imageModel.setNames(getString(myImageNameList[i]))
+            imageModel.setTexts(getString(myImageTextList[i]))
+            imageModel.setImages(myImageList[i])
+            list.add(imageModel)
+        }
+        return list
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -72,21 +88,5 @@ class ForYouFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    private fun populateList(): ArrayList<CardModel> {
-        val list = ArrayList<CardModel>()
-        val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
-        val myImageNameList = arrayOf(R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header)
-        val myImageTextList = arrayOf(R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum)
-
-        for (i in 0..9) {
-            val imageModel = CardModel()
-            imageModel.setNames(getString(myImageNameList[i]))
-            imageModel.setTexts(getString(myImageTextList[i]))
-            imageModel.setImages(myImageList[i])
-            list.add(imageModel)
-        }
-        return list
     }
 }
