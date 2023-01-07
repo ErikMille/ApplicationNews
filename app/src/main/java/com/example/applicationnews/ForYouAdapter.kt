@@ -1,12 +1,18 @@
 package com.example.applicationnews
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import androidx.core.content.ContextCompat.startActivity
+
+import android.content.Intent
+import androidx.core.content.ContextCompat
 
 
 class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : RecyclerView.Adapter<ForYouAdapter.ViewHolder>() {
@@ -47,6 +53,8 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
         var nameMsg = itemView.findViewById<View>(R.id.firstLine) as TextView
         var txtMsg = itemView.findViewById<View>(R.id.text) as TextView
 
+
+
         init {
             itemView.setOnClickListener(this)
         }
@@ -55,6 +63,13 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
             val msg = txtMsg.text
             val snackbar = Snackbar.make(v, "$msg" + R.string.lorem_ipsum, Snackbar.LENGTH_LONG)
             snackbar.show()
+
+            try {
+                val intent = Intent(v.context, Article::class.java)
+                v.context.startActivity(intent)
+            } catch (e: Exception) {
+                Log.i("Activities", "Null input")
+            }
         }
     }
 }

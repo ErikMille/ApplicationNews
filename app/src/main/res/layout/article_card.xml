@@ -6,8 +6,7 @@
     android:layout_height="150dp"
     android:layout_margin="5dp"
     android:background="@android:drawable/dialog_holo_light_frame"
-    android:clickable="true"
-    android:onClick="launchArticle">
+    android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="fill_parent"
