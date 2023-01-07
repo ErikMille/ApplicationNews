@@ -23,13 +23,13 @@ class Account : AppCompatActivity() {
         recyclerView.adapter = mAdapter
     }
 
-    private fun populateList(): ArrayList<CardModel> {
-        val list = ArrayList<CardModel>()
+    private fun populateList(): ArrayList<InterestModel> {
+        val list = ArrayList<InterestModel>()
 
         val myImageTextList = arrayOf(R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header)
 
         for (i in 0..9) {
-            val imageModel = CardModel()
+            val imageModel = InterestModel()
             imageModel.setTexts(getString(myImageTextList[i]))
             list.add(imageModel)
         }

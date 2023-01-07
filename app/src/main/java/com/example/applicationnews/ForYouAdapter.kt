@@ -15,9 +15,7 @@ import android.content.Intent
 
 
 class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : RecyclerView.Adapter<ForYouAdapter.ViewHolder>() {
-    /*
-     * Inflate our views using the layout defined in row_layout.xml
-     */
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val v = inflater.inflate(R.layout.article_card, parent, false)
@@ -25,9 +23,6 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
         return ViewHolder(v)
     }
 
-    /*
-     * Bind the data to the child views of the ViewHolder
-     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val info = imageModelArrayList[position]
 
@@ -36,16 +31,10 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
         holder.txtMsg.text = info.getTexts()
     }
 
-    /*
-     * Get the maximum size of the
-     */
     override fun getItemCount(): Int {
         return imageModelArrayList.size
     }
-
-    /*
-     * The parent class that handles layout inflation and child view use
-     */
+    
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
         var imgView = itemView.findViewById<View>(R.id.icon) as ImageView
