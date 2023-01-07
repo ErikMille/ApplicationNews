@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Account"
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:background="@color/cardview_shadow_start_color">
+
+    <EditText
+        android:id="@+id/add_interest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:hint="@string/add_interest"
+        android:drawableLeft="@android:drawable/ic_input_add"
+        android:gravity="center"
+        android:background="@color/white"
+        android:padding="5dp">
+    </EditText>
+    <LinearLayout
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:orientation="vertical">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:background="@android:drawable/dialog_holo_light_frame">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/firstLine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/some_interest"
+                android:textSize="22sp"
+                android:padding="5dp"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+</LinearLayout>

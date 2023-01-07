@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ApplicationNews</string>
+    <string name="start">Tap an item from action bar menu</string>
+    <string name="link">The Link was clicked</string>
+    <string name="logoff">Logoff was clicked</string>
+    <string name="profile">Profile Icon was clicked</string>
+    <string name="refresh">Refresh Icon was clicked</string>
+    <string name="settings_xml">Settings</string>
+    <string name="refresh_xml">Refresh</string>
+    <string name="log_xml">Log Off</string>
+    <string name="profile_xml">Profile Page</string>
+    <string-array name="tabTitles">
+        <item>For You</item>
+        <item>Popular</item>
+        <item>Search</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="article_title">Title</string>
+    <string name="some_interest">Interest</string>
+    <string name="search">Search</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="lorem_ipsum_header">Lorem Ipsum.</string>
+    <string name="add_interest">Add Interest</string>
+    <string name="source_link"><a href="https://www.source.co.uk/">https://www.source.co.uk/</a></string>
+    ""
+</resources>
