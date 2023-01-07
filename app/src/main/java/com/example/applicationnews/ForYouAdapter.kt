@@ -53,7 +53,7 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
 
         override fun onClick(v: View) {
             val msg = txtMsg.text
-            val snackbar = Snackbar.make(v, "$msg" + R.string.lorem_ipsum_header, Snackbar.LENGTH_LONG)
+            val snackbar = Snackbar.make(v, "$msg" + R.string.lorem_ipsum, Snackbar.LENGTH_LONG)
             snackbar.show()
         }
     }
