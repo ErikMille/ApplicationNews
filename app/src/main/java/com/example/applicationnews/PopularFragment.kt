@@ -1,12 +1,24 @@
 package com.example.applicationnews
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.androidnetworking.error.ANError
+
+import org.json.JSONException
+import org.json.JSONObject
+import org.json.JSONArray
+
+import com.androidnetworking.interfaces.JSONObjectRequestListener
+
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.common.Priority
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,8 +53,8 @@ class PopularFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val imageModelArrayList = populateList()
-//
+//        val imageModelArrayList = populateList()
+        val imageModelArrayList = get_news_from_api()
         val recyclerView = view.findViewById(R.id.my_recycler_view_popular) as RecyclerView// Bind to the recyclerview in the layout
 
         val layoutManager = LinearLayoutManager(activity) // Get the layout manager
@@ -64,6 +76,60 @@ class PopularFragment : Fragment() {
             imageModel.setImages(myImageList[i])
             list.add(imageModel)
         }
+        return list
+    }
+
+    public fun get_news_from_api(): ArrayList<CardModel>{
+        val list = ArrayList<CardModel>()
+
+        AndroidNetworking.get("https://newsapi.org/v2/top-headlines")
+            .addQueryParameter("country", "in")
+            .addQueryParameter("apiKey", R.string.apiKeyNewsAPI.toString())
+            .addHeaders("token", "1234")
+            .setTag("test")
+            .setPriority(Priority.LOW)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject) {
+
+                    try {
+                        val articles = response.getJSONArray("articles")
+
+                        for (j in 0 until articles.length()) {
+                            val article = articles.getJSONObject(j)
+
+                            val currentArticle = CardModel()
+
+                            val author = article.getString("author")
+                            val title = article.getString("title")
+                            val description = article.getString("description")
+                            val url = article.getString("url")
+                            val urlToImage = article.getString("urlToImage")
+                            val publishedAt = article.getString("publishedAt")
+                            val content = article.getString("content")
+
+                            // setting the values of the ArticleModel
+                            // using the set methods
+                            currentArticle.setAuthor(author)
+                            currentArticle.setNames(title)
+//                            currentArticle.setDescription(description)
+                            currentArticle.setUrl(url)
+                            currentArticle.setUrlToImage(urlToImage)
+                            currentArticle.setPublishedAt(publishedAt)
+                            currentArticle.setTexts(content)
+
+                            // adding an article to the articles List
+                            list.add(currentArticle)
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onError(error: ANError) {
+                    //
+                }
+            })
         return list
     }
 
