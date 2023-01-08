@@ -1,23 +1,22 @@
 package com.example.applicationnews
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.androidnetworking.error.ANError
+import com.google.android.material.snackbar.Snackbar
 
-import org.json.JSONException
+
+import com.koushikdutta.ion.Ion
 import org.json.JSONObject
-import org.json.JSONArray
 
-import com.androidnetworking.interfaces.JSONObjectRequestListener
-
-import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.common.Priority
+//import com.androidnetworking.interfaces.JSONObjectRequestListener
+//import com.androidnetworking.error.ANError
+//import com.androidnetworking.AndroidNetworking
+//import com.androidnetworking.common.Priority
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,6 +33,7 @@ class PopularFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var list: ArrayList<CardModel>? = arrayListOf<CardModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,18 +52,12 @@ class PopularFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        populateList()
+        get_news_from_api()
 
-//        val imageModelArrayList = populateList()
-        val imageModelArrayList = get_news_from_api()
-        val recyclerView = view.findViewById(R.id.my_recycler_view_popular) as RecyclerView// Bind to the recyclerview in the layout
-
-        val layoutManager = LinearLayoutManager(activity) // Get the layout manager
-        recyclerView.layoutManager = layoutManager
-        val mAdapter = ForYouAdapter(imageModelArrayList)
-        recyclerView.adapter = mAdapter
     }
 
-    private fun populateList(): ArrayList<CardModel> {
+    private fun populateList(){
         val list = ArrayList<CardModel>()
         val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
         val myImageNameList = arrayOf(R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header)
@@ -74,63 +68,48 @@ class PopularFragment : Fragment() {
             imageModel.setNames(getString(myImageNameList[i]))
             imageModel.setTexts(getString(myImageTextList[i]))
             imageModel.setImages(myImageList[i])
-            list.add(imageModel)
+            this.list?.add(imageModel)
         }
-        return list
+        render()
     }
 
-    public fun get_news_from_api(): ArrayList<CardModel>{
-        val list = ArrayList<CardModel>()
+    private fun get_news_from_api(){
+        val url = "https://gnews.io/api/v4/search?q=example&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
 
-        AndroidNetworking.get("https://newsapi.org/v2/top-headlines")
-            .addQueryParameter("country", "in")
-            .addQueryParameter("apiKey", R.string.apiKeyNewsAPI.toString())
-            .addHeaders("token", "1234")
-            .setTag("test")
-            .setPriority(Priority.LOW)
-            .build()
-            .getAsJSONObject(object : JSONObjectRequestListener {
-                override fun onResponse(response: JSONObject) {
+        Ion.with(this)
+            .load(url)
+            .asString()
+            .setCallback{ex, result ->
+                populateList(result)
+            }
+    }
 
-                    try {
-                        val articles = response.getJSONArray("articles")
+    private fun populateList(result: String) {
+        val articlesObj = JSONObject(result)
+        val articlesArray = articlesObj.getJSONArray("articles")
+        val snackbar = Snackbar.make(this.requireView(), articlesArray.getJSONObject(1).getString("title"), Snackbar.LENGTH_LONG)
+        snackbar.show()
+        val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
 
-                        for (j in 0 until articles.length()) {
-                            val article = articles.getJSONObject(j)
+        for (i in 0..9) {
+            val imageModel = CardModel()
+            val title = articlesArray.getJSONObject(i).getString("title")
+            val content = articlesArray.getJSONObject(i).getString("content")
+            imageModel.setNames(title )
+            imageModel.setTexts(content)
+            imageModel.setImages(myImageList[i])
+            this.list?.add(imageModel)
+        }
+        render()
+    }
 
-                            val currentArticle = CardModel()
-
-                            val author = article.getString("author")
-                            val title = article.getString("title")
-                            val description = article.getString("description")
-                            val url = article.getString("url")
-                            val urlToImage = article.getString("urlToImage")
-                            val publishedAt = article.getString("publishedAt")
-                            val content = article.getString("content")
-
-                            // setting the values of the ArticleModel
-                            // using the set methods
-                            currentArticle.setAuthor(author)
-                            currentArticle.setNames(title)
-//                            currentArticle.setDescription(description)
-                            currentArticle.setUrl(url)
-                            currentArticle.setUrlToImage(urlToImage)
-                            currentArticle.setPublishedAt(publishedAt)
-                            currentArticle.setTexts(content)
-
-                            // adding an article to the articles List
-                            list.add(currentArticle)
-                        }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-                }
-
-                override fun onError(error: ANError) {
-                    //
-                }
-            })
-        return list
+    private fun render() {
+        val imageModelArrayList = this.list
+        val recyclerView = view?.findViewById(R.id.my_recycler_view_popular) as RecyclerView// Bind to the recyclerview in the layout
+        val layoutManager = LinearLayoutManager(activity) // Get the layout manager
+        recyclerView.layoutManager = layoutManager
+        val mAdapter = imageModelArrayList?.let { ForYouAdapter(it) }
+        recyclerView.adapter = mAdapter
     }
 
     companion object {

@@ -32,7 +32,7 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
     override fun getItemCount(): Int {
         return imageModelArrayList.size
     }
-    
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
 
         var imgView = itemView.findViewById<View>(R.id.icon) as ImageView
