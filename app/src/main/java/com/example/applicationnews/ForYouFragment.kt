@@ -34,7 +34,6 @@ class ForYouFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
     }
 
     override fun onCreateView(
@@ -68,16 +67,16 @@ class ForYouFragment : Fragment() {
 
     private fun get_news_from_api(){
         val arr = arrayOf("aviation","nature","dog")
+
         var s = ""
         for (i in arr.indices) {
             if (i == 0) {
                 s+=arr[i]
             } else {
-                s += " OR " + (arr[i])
+                s += "%20OR%20" + (arr[i])
             }
         }
 
-        s = "aviation"
         val url = "https://gnews.io/api/v4/search?q=${s}&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
 
         Ion.with(this)
