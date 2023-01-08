@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import android.content.Intent
-
+import com.squareup.picasso.Picasso
 
 
 class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : RecyclerView.Adapter<ForYouAdapter.ViewHolder>() {
@@ -24,9 +24,14 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val info = imageModelArrayList[position]
 
-        holder.imgView.setImageResource(info.getImages())
+        Picasso
+            .get()
+            .load(info.getUrlToImage())
+            .into(holder.imgView)
+
+//        holder.imgView.setImageResource(info.getImages())
         holder.nameMsg.text = info.getNames()
-        holder.txtMsg.text = info.getTexts()
+        holder.txtMsg.text = info.getDescription()
     }
 
     override fun getItemCount(): Int {
@@ -38,8 +43,6 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
         var imgView = itemView.findViewById<View>(R.id.icon) as ImageView
         var nameMsg = itemView.findViewById<View>(R.id.firstLine) as TextView
         var txtMsg = itemView.findViewById<View>(R.id.text) as TextView
-
-
 
         init {
             itemView.setOnClickListener(this)

@@ -83,15 +83,20 @@ class PopularFragment : Fragment() {
     private fun populateList(result: String) {
         val articlesObj = JSONObject(result)
         val articlesArray = articlesObj.getJSONArray("articles")
-        val snackbar = Snackbar.make(this.requireView(), articlesArray.getJSONObject(1).getString("title"), Snackbar.LENGTH_LONG)
-        snackbar.show()
+//        val snackbar = Snackbar.make(this.requireView(), articlesArray.getJSONObject(1).getString("title"), Snackbar.LENGTH_LONG)
+//        snackbar.show()
         val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
 
         for (i in 0..9) {
             val imageModel = CardModel()
             imageModel.setNames(articlesArray.getJSONObject(i).getString("title"))
             imageModel.setTexts(articlesArray.getJSONObject(i).getString("content"))
-            imageModel.setImages(myImageList[i])
+            imageModel.setAuthor(articlesArray.getJSONObject(i).getString("title"))
+            imageModel.setPublishedAt(articlesArray.getJSONObject(i).getString("publishedAt"))
+            imageModel.setUrl(articlesArray.getJSONObject(i).getString("url"))
+            imageModel.setDescription(articlesArray.getJSONObject(i).getString("description"))
+            imageModel.setUrlToImage(articlesArray.getJSONObject(i).getString("image"))
+//            imageModel.setImages(myImageList[i])
             this.list?.add(imageModel)
         }
         render()

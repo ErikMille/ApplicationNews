@@ -3,9 +3,10 @@ package com.example.applicationnews
 class CardModel {
     var modelName: String? = null
     var modelText: String? = null
+    var modelDescription: String? = null
     var modelAuthor: String? = null
-    var modelUrl: String? = null
     var modelPublishedAt: String? = null
+    var modelUrl: String? = null
     var modelUrlToImage: String? = null
 
     private var modelImage: Int = 0
@@ -18,12 +19,20 @@ class CardModel {
         this.modelName = name
     }
 
+    fun getDescription(): String {
+        return modelDescription.toString()
+    }
+
+    fun setDescription(description: String) {
+        this.modelDescription = description
+    }
+
     fun getTexts(): String {
         return modelText.toString()
     }
 
-    fun setTexts(name: String) {
-        this.modelText = name
+    fun setTexts(text: String) {
+        this.modelText = text
     }
 
     fun getAuthor(): String {
@@ -50,7 +59,7 @@ class CardModel {
         this.modelPublishedAt = publishedAt
     }
 
-    fun getmodelUrlToImage(): String {
+    fun getUrlToImage(): String {
         return modelUrlToImage.toString()
     }
 
