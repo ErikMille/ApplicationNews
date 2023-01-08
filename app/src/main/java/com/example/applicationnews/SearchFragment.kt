@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.koushikdutta.ion.Ion
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +25,7 @@ class SearchFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var list: ArrayList<CardModel>? = arrayListOf<CardModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,31 +45,64 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val imageModelArrayList = populateList()
-//
-        val recyclerView = view.findViewById(R.id.my_recycler_view_search) as RecyclerView// Bind to the recyclerview in the layout
-
-        val layoutManager = LinearLayoutManager(activity) // Get the layout manager
-        recyclerView.layoutManager = layoutManager
-        val mAdapter = ForYouAdapter(imageModelArrayList)
-        recyclerView.adapter = mAdapter
+//        populateList()
+        get_news_from_api()
     }
 
-    private fun populateList(): ArrayList<CardModel> {
+    private fun populateList(){
         val list = ArrayList<CardModel>()
         val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
         val myImageNameList = arrayOf(R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header)
-        val myImageTextList = arrayOf(R.string.lorem_ipsum_search,R.string.lorem_ipsum_search,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum)
+        val myImageTextList = arrayOf(R.string.lorem_ipsum_popular,R.string.lorem_ipsum_popular,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum)
 
         for (i in 0..9) {
             val imageModel = CardModel()
             imageModel.setNames(getString(myImageNameList[i]))
             imageModel.setTexts(getString(myImageTextList[i]))
             imageModel.setImages(myImageList[i])
-            list.add(imageModel)
+            this.list?.add(imageModel)
         }
-        return list
+        render()
+    }
+
+    private fun get_news_from_api(){
+        val s = "airplane"
+        val url = "https://gnews.io/api/v4/search?q=${s}&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
+
+        Ion.with(this)
+            .load(url)
+            .asString()
+            .setCallback{ex, result ->
+                populateList(result)
+            }
+    }
+
+    private fun populateList(result: String) {
+        val articlesObj = JSONObject(result)
+        val articlesArray = articlesObj.getJSONArray("articles")
+        val snackbar = Snackbar.make(this.requireView(), articlesArray.getJSONObject(1).getString("title"), Snackbar.LENGTH_LONG)
+        snackbar.show()
+        val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
+
+        for (i in 0..9) {
+            val imageModel = CardModel()
+            val title = articlesArray.getJSONObject(i).getString("title")
+            val content = articlesArray.getJSONObject(i).getString("content")
+            imageModel.setNames(title )
+            imageModel.setTexts(content)
+            imageModel.setImages(myImageList[i])
+            this.list?.add(imageModel)
+        }
+        render()
+    }
+
+    private fun render() {
+        val imageModelArrayList = this.list
+        val recyclerView = view?.findViewById(R.id.my_recycler_view_search) as RecyclerView// Bind to the recyclerview in the layout
+        val layoutManager = LinearLayoutManager(activity) // Get the layout manager
+        recyclerView.layoutManager = layoutManager
+        val mAdapter = imageModelArrayList?.let { ForYouAdapter(it) }
+        recyclerView.adapter = mAdapter
     }
 
     companion object {

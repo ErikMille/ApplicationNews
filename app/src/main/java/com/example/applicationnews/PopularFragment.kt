@@ -13,10 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.koushikdutta.ion.Ion
 import org.json.JSONObject
 
-//import com.androidnetworking.interfaces.JSONObjectRequestListener
-//import com.androidnetworking.error.ANError
-//import com.androidnetworking.AndroidNetworking
-//import com.androidnetworking.common.Priority
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,7 +44,6 @@ class PopularFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_popular, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,7 +70,7 @@ class PopularFragment : Fragment() {
     }
 
     private fun get_news_from_api(){
-        val url = "https://gnews.io/api/v4/search?q=example&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
+        val url = "https://gnews.io/api/v4/top-headlines?&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
 
         Ion.with(this)
             .load(url)
