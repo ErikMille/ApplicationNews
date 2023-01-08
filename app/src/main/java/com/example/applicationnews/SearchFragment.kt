@@ -65,7 +65,7 @@ class SearchFragment : Fragment() {
         render()
     }
 
-    private fun get_news_from_api(){
+    private fun get_news_from_api() {
         val s = "airplane"
         val url = "https://gnews.io/api/v4/search?q=${s}&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
 

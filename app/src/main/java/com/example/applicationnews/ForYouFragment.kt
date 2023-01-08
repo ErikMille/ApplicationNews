@@ -67,7 +67,18 @@ class ForYouFragment : Fragment() {
     }
 
     private fun get_news_from_api(){
-        val url = "https://gnews.io/api/v4/search?q=example&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
+        val arr = arrayOf("aviation","nature","dog")
+        var s = ""
+        for (i in arr.indices) {
+            if (i == 0) {
+                s+=arr[i]
+            } else {
+                s += " OR " + (arr[i])
+            }
+        }
+
+        s = "aviation"
+        val url = "https://gnews.io/api/v4/search?q=${s}&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
 
         Ion.with(this)
             .load(url)
@@ -80,8 +91,6 @@ class ForYouFragment : Fragment() {
     private fun populateList(result: String) {
         val articlesObj = JSONObject(result)
         val articlesArray = articlesObj.getJSONArray("articles")
-        val snackbar = Snackbar.make(this.requireView(), articlesArray.getJSONObject(1).getString("title"), Snackbar.LENGTH_LONG)
-        snackbar.show()
         val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
 
         for (i in 0..9) {
