@@ -94,10 +94,8 @@ class ForYouFragment : Fragment() {
 
         for (i in 0..9) {
             val imageModel = CardModel()
-            val title = articlesArray.getJSONObject(i).getString("title")
-            val content = articlesArray.getJSONObject(i).getString("content")
-            imageModel.setNames(title )
-            imageModel.setTexts(content)
+            imageModel.setNames(articlesArray.getJSONObject(i).getString("title"))
+            imageModel.setTexts(articlesArray.getJSONObject(i).getString("content"))
             imageModel.setImages(myImageList[i])
             this.list?.add(imageModel)
         }
