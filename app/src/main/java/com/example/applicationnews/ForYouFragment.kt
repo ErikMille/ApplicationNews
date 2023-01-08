@@ -96,7 +96,11 @@ class ForYouFragment : Fragment() {
             val imageModel = CardModel()
             imageModel.setNames(articlesArray.getJSONObject(i).getString("title"))
             imageModel.setTexts(articlesArray.getJSONObject(i).getString("content"))
-            imageModel.setImages(myImageList[i])
+            imageModel.setAuthor(articlesArray.getJSONObject(i).getString("title"))
+            imageModel.setPublishedAt(articlesArray.getJSONObject(i).getString("publishedAt"))
+            imageModel.setUrl(articlesArray.getJSONObject(i).getString("url"))
+            imageModel.setDescription(articlesArray.getJSONObject(i).getString("description"))
+            imageModel.setUrlToImage(articlesArray.getJSONObject(i).getString("image"))
             this.list?.add(imageModel)
         }
         render()
