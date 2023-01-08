@@ -15,9 +15,9 @@ class Account : AppCompatActivity() {
 
         val imageModelArrayList = populateList()
 //
-        val recyclerView = findViewById(R.id.my_recycler_view_interests) as RecyclerView// Bind to the recyclerview in the layout
+        val recyclerView = findViewById(R.id.my_recycler_view_interests) as RecyclerView
 
-        val layoutManager = LinearLayoutManager(this) // Get the layout manager
+        val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         val mAdapter = InterestsRecyclerAdapter(imageModelArrayList)
         recyclerView.adapter = mAdapter

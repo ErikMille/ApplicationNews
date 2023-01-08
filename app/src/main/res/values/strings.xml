@@ -24,5 +24,5 @@
     <string name="lorem_ipsum_header">Lorem Ipsum.</string>
     <string name="add_interest">Add Interest</string>
     <string name="source_link"><a href="https://www.source.co.uk/">https://www.source.co.uk/</a></string>
-    ""
+    <string name="apiKey">ab73f2546732982105a0ab74c77856f6</string>
 </resources>
