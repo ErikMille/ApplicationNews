@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.koushikdutta.ion.Ion
 import org.json.JSONObject
+import java.net.URLEncoder
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,7 +68,8 @@ class SearchFragment : Fragment() {
 
     private fun get_news_from_api(query: String?) {
 //        val query = "airplane"
-        val url = "https://gnews.io/api/v4/search?q=${query}&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
+        val encodedQuery = URLEncoder.encode(query, "utf-8")
+        val url = "https://gnews.io/api/v4/search?q=${encodedQuery}&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
 
         Ion.with(this)
             .load(url)
@@ -80,7 +82,6 @@ class SearchFragment : Fragment() {
     private fun populateList(result: String) {
         val articlesObj = JSONObject(result)
         val articlesArray = articlesObj.getJSONArray("articles")
-        val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
 
         for (i in 0..9) {
             val imageModel = CardModel()
