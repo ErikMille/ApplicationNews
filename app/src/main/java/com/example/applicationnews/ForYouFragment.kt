@@ -49,22 +49,6 @@ class ForYouFragment : Fragment() {
         get_news_from_api()
     }
 
-    private fun populateList(){
-        val list = ArrayList<CardModel>()
-        val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
-        val myImageNameList = arrayOf(R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header)
-        val myImageTextList = arrayOf(R.string.lorem_ipsum_popular,R.string.lorem_ipsum_popular,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum)
-
-        for (i in 0..9) {
-            val imageModel = CardModel()
-            imageModel.setNames(getString(myImageNameList[i]))
-            imageModel.setTexts(getString(myImageTextList[i]))
-            imageModel.setImages(myImageList[i])
-            this.list?.add(imageModel)
-        }
-        render()
-    }
-
     private fun get_news_from_api(){
         val arr = arrayOf("aviation","nature","dog")
 

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -39,35 +40,34 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val searchView = view.findViewById(R.id.search_bar) as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                clearList()
+                get_news_from_api(query)
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
 //        populateList()
-        get_news_from_api()
+//        get_news_from_api()
     }
 
-    private fun populateList(){
-        val list = ArrayList<CardModel>()
-        val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
-        val myImageNameList = arrayOf(R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header, R.string.lorem_ipsum_header)
-        val myImageTextList = arrayOf(R.string.lorem_ipsum_popular,R.string.lorem_ipsum_popular,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum,R.string.lorem_ipsum)
-
-        for (i in 0..9) {
-            val imageModel = CardModel()
-            imageModel.setNames(getString(myImageNameList[i]))
-            imageModel.setTexts(getString(myImageTextList[i]))
-            imageModel.setImages(myImageList[i])
-            this.list?.add(imageModel)
-        }
-        render()
+    private fun clearList(){
+        this.list?.clear()
     }
 
-    private fun get_news_from_api() {
-        val s = "airplane"
-        val url = "https://gnews.io/api/v4/search?q=${s}&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
+    private fun get_news_from_api(query: String?) {
+//        val query = "airplane"
+        val url = "https://gnews.io/api/v4/search?q=${query}&token=" +"ab73f2546732982105a0ab74c77856f6"+ "&lang=en&country=us&max=10"
 
         Ion.with(this)
             .load(url)
@@ -80,8 +80,6 @@ class SearchFragment : Fragment() {
     private fun populateList(result: String) {
         val articlesObj = JSONObject(result)
         val articlesArray = articlesObj.getJSONArray("articles")
-        val snackbar = Snackbar.make(this.requireView(), articlesArray.getJSONObject(1).getString("title"), Snackbar.LENGTH_LONG)
-        snackbar.show()
         val myImageList = arrayOf(R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship, R.drawable.ship)
 
         for (i in 0..9) {
@@ -99,11 +97,12 @@ class SearchFragment : Fragment() {
     }
 
     private fun render() {
-        val imageModelArrayList = this.list
+//        val imageModelArrayList = this.list
         val recyclerView = view?.findViewById(R.id.my_recycler_view_search) as RecyclerView// Bind to the recyclerview in the layout
+        recyclerView.removeAllViewsInLayout()
         val layoutManager = LinearLayoutManager(activity) // Get the layout manager
         recyclerView.layoutManager = layoutManager
-        val mAdapter = imageModelArrayList?.let { ForYouAdapter(it) }
+        val mAdapter = this.list?.let { ForYouAdapter(it) }
         recyclerView.adapter = mAdapter
     }
 
