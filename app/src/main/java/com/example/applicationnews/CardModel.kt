@@ -44,7 +44,7 @@ class CardModel {
     }
 
     fun getUrl(): String {
-        return modelAuthor.toString()
+        return modelUrl.toString()
     }
 
     fun setUrl(url: String) {

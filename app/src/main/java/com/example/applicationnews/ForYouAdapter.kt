@@ -29,9 +29,9 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
             .load(info.getUrlToImage())
             .into(holder.imgView)
 
-//        holder.imgView.setImageResource(info.getImages())
         holder.nameMsg.text = info.getNames()
         holder.txtMsg.text = info.getDescription()
+        holder.info = info
     }
 
     override fun getItemCount(): Int {
@@ -43,6 +43,7 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
         var imgView = itemView.findViewById<View>(R.id.icon) as ImageView
         var nameMsg = itemView.findViewById<View>(R.id.firstLine) as TextView
         var txtMsg = itemView.findViewById<View>(R.id.text) as TextView
+        var info: CardModel? = CardModel()
 
         init {
             itemView.setOnClickListener(this)
@@ -53,8 +54,14 @@ class ForYouAdapter (private val imageModelArrayList: MutableList<CardModel>) : 
             val snackbar = Snackbar.make(v, "$msg" + R.string.lorem_ipsum, Snackbar.LENGTH_LONG)
             snackbar.show()
 
+            imageModelArrayList
+
             try {
                 val intent = Intent(v.context, Article::class.java)
+                intent.putExtra("title", this.info?.getNames())
+                intent.putExtra("description", this.info?.getDescription())
+                intent.putExtra("url", this.info?.getUrl())
+                intent.putExtra("imageUrl", this.info?.getUrlToImage())
                 v.context.startActivity(intent)
             } catch (e: Exception) {
                 Log.i("Activities", "Null input")
